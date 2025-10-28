@@ -2,17 +2,20 @@
 import cv2
 import time
 import csv
+import os
+import numpy as np
 from sensor import GridEYESensor
-from processor import PeopleCounter
+from people_flow_processor import PeopleCounter
 from config import *
 
 # --- Logging Setup ---
 LOG_FILE = os.path.join(DATA_DIR, "log_data.csv")
-LOG_INTERVAL_FRAMES = FRAME_RATE # Log data once per second
+LOG_INTERVAL_FRAMES = FRAME_RATE  # Log data once per second
 
 def initialize_logger():
     """Initializes the CSV log file with headers."""
     headers = ['Timestamp_ms', 'Occupancy'] + [f'Pixel_{i}' for i in range(TOTAL_PIXELS)]
+    os.makedirs(DATA_DIR, exist_ok=True)
     with open(LOG_FILE, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(headers)
@@ -35,10 +38,10 @@ def main():
             return
         sensor.save_background()
         
-    counter = PeopleCounter(sensor.background)
+    counter = PeopleCounter(sensor.background_temp)
     
     print("\n--- Starting Real-Time People Counting ---")
-    print(f"Occupancy is tracked continuously (1 frame = {FRAME_DELAY_MS}ms). Press 'q' to exit.")
+    print(f"Occupancy is tracked continuously (1 frame = {FRAME_DELAY_MS} ms). Press 'q' to exit.")
     
     frame_counter = 0
     

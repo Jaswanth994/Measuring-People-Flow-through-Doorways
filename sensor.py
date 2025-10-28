@@ -22,7 +22,6 @@ class GridEYESensor:
         pixel_sum = np.zeros(TOTAL_PIXELS, dtype=np.float64)
         
         for i in range(BACKGROUND_FRAMES):
-            # Use the actual driver to read
             frame = self.driver.read_raw_frame()
             pixel_sum += frame
             time.sleep(1 / FRAME_RATE)
@@ -38,7 +37,7 @@ class GridEYESensor:
             self.background_temp = np.load(BACKGROUND_FILE)
             return True
         else:
-            print(f"Warning: Background file not found.")
+            print("Warning: Background file not found.")
             return False
 
     def save_background(self):
