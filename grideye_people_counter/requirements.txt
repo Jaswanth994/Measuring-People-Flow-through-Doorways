@@ -1,0 +1,6 @@
+numpy
+opencv-python
+scipy
+adafruit-circuitpython-amg88xx
+matplotlib
+setuptools
