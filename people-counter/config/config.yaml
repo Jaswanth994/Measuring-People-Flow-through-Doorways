@@ -1,0 +1,46 @@
+# Sensor Configuration
+sensor:
+  i2c_address: 0x69
+  frame_rate: 10  # Hz
+  resolution: [8, 8]
+
+# Background Configuration
+background:
+  num_frames: 250
+  update_interval: 3600  # seconds (1 hour)
+  temperature_variance: 2.5  # degrees Celsius
+
+# Noise Filtering
+noise_filter:
+  temperature_threshold: 0.25  # degrees above background
+  otsu_threshold: 0.75
+  heat_distribution:
+    width_threshold: 0.5  # 50% of max width
+    amplitude_threshold: 0.4  # 40% of biggest amplitude
+
+# Body Detection
+body_detection:
+  min_body_area: 0.10  # 10% of frame area
+  max_body_area: 0.30  # 30% of frame area
+  large_body_threshold: 0.30
+  temperature_increment: 0.25
+
+# Tracking
+tracking:
+  spatial_distance_threshold: 0.10  # 10% of frame width
+  temperature_distance_threshold: 1.0  # degrees
+  temporal_distance_threshold: 5  # frames
+  min_tracking_frames: 3
+
+# Visualization
+visualization:
+  enable: true
+  interpolation_size: [256, 256]
+  colormap: "jet"
+  display_fps: true
+
+# Logging
+logging:
+  enable: true
+  log_file: "data/logs/people_counter.log"
+  log_level: "INFO"
