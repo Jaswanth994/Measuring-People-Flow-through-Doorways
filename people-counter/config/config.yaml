@@ -13,21 +13,21 @@ background:
 # Noise Filtering
 noise_filter:
   temperature_threshold: 0.25  # degrees above background
-  otsu_threshold: 0.75
+  otsu_threshold: 1.25
   heat_distribution:
-    width_threshold: 0.5  # 50% of max width
-    amplitude_threshold: 0.4  # 40% of biggest amplitude
+     width_threshold: 0.5  # 50% of max width
+     amplitude_threshold: 0.4  # 40% of biggest amplitude
 
 # Body Detection
 body_detection:
-  min_body_area: 0.10  # 10% of frame area
+  min_body_area: 0.05  # 10% of frame area
   max_body_area: 0.30  # 30% of frame area
-  large_body_threshold: 0.30
+  large_body_threshold: 0.20
   temperature_increment: 0.25
 
 # Tracking
 tracking:
-  spatial_distance_threshold: 0.10  # 10% of frame width
+  spatial_distance_threshold: 0.20  # 10% of frame width
   temperature_distance_threshold: 1.0  # degrees
   temporal_distance_threshold: 5  # frames
   min_tracking_frames: 3

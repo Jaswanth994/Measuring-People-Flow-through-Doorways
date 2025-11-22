@@ -31,9 +31,32 @@ class NoiseFilter:
         self.width_threshold = config['noise_filter']['heat_distribution']['width_threshold']
         self.amplitude_threshold = config['noise_filter']['heat_distribution']['amplitude_threshold']
     
+    #def has_human(self, diff_frame, background_temp):
+        #Detect if frame contains a human using multi-stage filtering
+        
+        #Args:
+         #   diff_frame: Difference from background
+          #  background_temp: Background average temperature
+            
+        #Returns:
+         #   bool: True if human detected
+        # Stage 1: Heat distribution check
+        #if not self._check_heat_distribution(diff_frame):
+         #   return False
+        
+        # Stage 2: Otsu's thresholding
+        #if not self._check_otsu_threshold(diff_frame):
+         #   return False
+        
+        # Stage 3: Temperature filter
+        #if not self._check_temperature_filter(diff_frame, background_temp):
+         #   return False
+        
+        #return True
+    
     def has_human(self, diff_frame, background_temp):
         """
-        Detect if frame contains a human using multi-stage filtering
+        Detect if frame contains a human using a simple max pixel check
         
         Args:
             diff_frame: Difference from background
@@ -42,20 +65,18 @@ class NoiseFilter:
         Returns:
             bool: True if human detected
         """
-        # Stage 1: Heat distribution check
-        if not self._check_heat_distribution(diff_frame):
-            return False
+        # This is a much simpler check.
+        # We re-purpose 'otsu_threshold' from the config
+        # to be our new "Max Pixel Threshold".
         
-        # Stage 2: Otsu's thresholding
-        if not self._check_otsu_threshold(diff_frame):
-            return False
+        # If any single pixel is 1.25C (or whatever we set)
+        # hotter than the background, we check for a body.
+        max_pixel_threshold = self.otsu_threshold
         
-        # Stage 3: Temperature filter
-        if not self._check_temperature_filter(diff_frame, background_temp):
-            return False
+        if np.max(diff_frame) >= max_pixel_threshold:
+            return True
         
-        return True
-    
+        return False
     def _check_heat_distribution(self, diff_frame):
         """
         Check heat distribution pattern

@@ -285,3 +285,5 @@ class Visualizer:
         if image is not None:
             cv2.imwrite(filename, image)
             self.logger.info(f"Frame saved to {filename}")
+
+
